@@ -319,7 +319,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         var DROPBOX_CLIENT_ID = 'p2vlq3qzsirlzc0';
 
         var post_file = {
-            parent:"[FOLDER_ID]",            
+            parent:"skema",            
             file: JSON.stringify(DesignerApp.NodeEntities.ExportToJSON()),
             name:"skema.skema"
         };
