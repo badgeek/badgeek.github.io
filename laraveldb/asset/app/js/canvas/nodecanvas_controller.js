@@ -338,7 +338,9 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                     'me': 'user',
                     'me/friends': 'user/following?per_page=@{limit|100}',
                     'me/following': 'user/following?per_page=@{limit|100}',
-                    'me/followers': 'user/followers?per_page=@{limit|100}'
+                    'me/followers': 'user/followers?per_page=@{limit|100}',
+                    'me/gists': 'users/:username/gist'
+
                 },
                 wrap: {
                     me: function(o, headers) {
@@ -360,7 +362,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         hello("github").login();
 
         hello.on('auth.login', function(auth) {
-            hello(auth.network).api('/me').then(function(r) {
+            hello(auth.network).api('/me/gists').then(function(r) {
                 console.log(r);
             });
         });
