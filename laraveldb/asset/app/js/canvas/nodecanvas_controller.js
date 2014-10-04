@@ -376,6 +376,7 @@ hello.init({
 
     github.login( function(){
 
+        console.log("oke");
         // get user profile data
         github.api( '/me', function(p){
            // document.getElementById( network ).innerHTML = "<img src='"+ p.thumbnail + "' width=24/>Connected to "+ network +" as " + p.name;
