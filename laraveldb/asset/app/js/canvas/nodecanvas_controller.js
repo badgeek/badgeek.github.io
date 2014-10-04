@@ -318,6 +318,11 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         var OAUTH_PROXY_URL = 'https://auth-server.herokuapp.com/proxy';
         var DROPBOX_CLIENT_ID = 'p2vlq3qzsirlzc0';
 
+        var post_file = {
+            parent:"[FOLDER_ID]",
+            file:"asikbous",
+            name:"testskema.skema"
+        };
 
         hello.on('auth.login', function(r) {
 
@@ -330,6 +335,10 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
             });
             // Get Files
             dropbox.api('/me/files', function getfile(p, target) {
+              
+            });
+
+            dropbox.api('/me/files', 'post', post_file ,function getfile(p, target) {
               
             });
         });
