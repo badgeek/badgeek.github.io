@@ -320,51 +320,13 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
 
         hello.init({
-            github: {
-                name: 'GitHub',
-                oauth: {
-                    version: 2,
-                    auth: 'https://github.com/login/oauth/authorize',
-                    grant: 'https://github.com/login/oauth/access_token',
-                    response_type: 'code'
-                },
-
-                scope: {
-                    basic: '',
-                    email: 'user:email'
-                },
-                base: 'https://api.github.com/',
-                get: {
-                    'me': 'user',
-                    'me/friends': 'user/following?per_page=@{limit|100}',
-                    'me/following': 'user/following?per_page=@{limit|100}',
-                    'me/followers': 'user/followers?per_page=@{limit|100}',
-                    'me/gists': 'gists'
-                },
-                post: {
-                    'me/create': 'gists'
-                },
-                wrap: {
-                    me: function(o, headers) {
-                        return o;
-                    },
-                    "default": function(o, headers, req) {
-                        return o;
-                    }
-                }
-            }
-        });
-
-
-
-        hello.init({
             github: GITHUB_CLIENT_ID
         });
 
         hello("github").login();
 
         hello.on('auth.login', function(auth) {
-            hello(auth.network).api('/me/create', 'post', {
+            hello(auth.network).api('/gists', 'post', {
                 "description": "the description for this gist",
                 "public": true,
                 "files": {
