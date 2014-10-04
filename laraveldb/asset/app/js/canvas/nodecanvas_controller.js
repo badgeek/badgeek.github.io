@@ -338,7 +338,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
 
         hello.on('auth.login', function(auth) {
-            hello(auth.network).api('/gists', 'post', JSON.stringify(json_post) , function(r) {
+            hello(auth.network).api('/gists', 'post', {data: JSON.stringify(json_post)} , function(r) {
                 console.log(r);
             });
         });
