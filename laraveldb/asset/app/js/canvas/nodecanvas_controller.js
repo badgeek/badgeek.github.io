@@ -342,7 +342,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                     'me/gists': 'gists'
                 },
                 post: {
-                    'me/gists': 'gists'
+                    'me/create': 'gists'
                 },
                 wrap: {
                     me: function(o, headers) {
@@ -364,7 +364,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         hello("github").login();
 
         hello.on('auth.login', function(auth) {
-            hello(auth.network).api('/me/gists', 'post', {
+            hello(auth.network).api('/me/create', 'post', {
                 "description": "the description for this gist",
                 "public": true,
                 "files": {
