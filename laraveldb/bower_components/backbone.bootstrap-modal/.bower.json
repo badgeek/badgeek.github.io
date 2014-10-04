@@ -1,13 +1,13 @@
 {
   "name": "backbone.bootstrap-modal",
   "homepage": "https://github.com/badgeek/backbone.bootstrap-modal",
-  "_release": "v0.9.0c",
+  "_release": "v0.9.0b",
   "_resolution": {
     "type": "tag",
-    "tag": "v0.9.0c",
-    "commit": "3abd90b214eea4682835f212d5ddd0a0ac8f2938"
+    "tag": "v0.9.0b",
+    "commit": "bbf2885137a73f3e3eb33b09c6853110b7bcedf9"
   },
   "_source": "git@github.com:badgeek/backbone.bootstrap-modal.git",
-  "_target": "v0.9.0c",
+  "_target": "v0.9.0b",
   "_originalSource": "git@github.com:badgeek/backbone.bootstrap-modal.git"
 }

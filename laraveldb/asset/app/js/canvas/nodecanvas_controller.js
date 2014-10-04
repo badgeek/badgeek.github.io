@@ -1,4 +1,4 @@
-DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Backbone, Marionette, $, _) {
+DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Backbone, Marionette, $, _, Hello) {
 
     // INIT CANVAS
 
@@ -311,6 +311,86 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
     });
 
+
+    viewNodeCanvas.on("canvas:savegist", function() {
+        //console.log(hello);
+
+var OAUTH_PROXY_URL = 'https://auth-server.herokuapp.com/proxy';
+var GITHUB_CLIENT_ID = '25bbf727cf799dcb1081';
+
+
+hello.init({
+    github : {
+        name : 'GitHub',
+        oauth : {
+            version : 2,
+            auth : 'https://github.com/login/oauth/authorize',
+            grant : 'https://github.com/login/oauth/access_token',
+            response_type : 'code'
+        },
+
+        scope : {
+            basic           : '',
+            email           : 'user:email'
+        },
+        base : 'https://api.github.com/',
+        get : {
+            'me' : 'user',
+            'me/friends' : 'user/following?per_page=@{limit|100}',
+            'me/following' : 'user/following?per_page=@{limit|100}',
+            'me/followers' : 'user/followers?per_page=@{limit|100}'
+        },
+        wrap : {
+            me : function(o,headers){
+
+                formatError(o,headers);
+                formatUser(o);
+
+                return o;
+            },
+            "default" : function(o,headers,req){
+
+                formatError(o,headers);
+
+                if(Object.prototype.toString.call(o) === '[object Array]'){
+                    o = {data:o};
+                    paging(o,headers,req);
+                    for(var i=0;i<o.data.length;i++){
+                        formatUser(o.data[i]);
+                    }
+                }
+                return o;
+            }
+        }
+    }
+});
+
+hello.init({
+    github : GITHUB_CLIENT_ID
+},{
+    redirect_uri : '../redirect.html',
+    oauth_proxy : OAUTH_PROXY_URL
+});
+
+    var github = hello("github");
+
+    github.login( function(){
+
+        // get user profile data
+        github.api( '/me', function(p){
+           // document.getElementById( network ).innerHTML = "<img src='"+ p.thumbnail + "' width=24/>Connected to "+ network +" as " + p.name;
+        });
+
+        // Get a bespoke endpoint from github
+        github.api( '/user/repos', function(r){
+            //document.getElementById('result').innerHTML = JSON.stringify(r,null,2);
+        });
+
+    });
+
+
+
+    });
     //
     //  LAUNCH
     //
