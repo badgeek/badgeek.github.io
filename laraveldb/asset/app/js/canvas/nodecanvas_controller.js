@@ -372,7 +372,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                         "content": "String file contents"
                     }
                 }
-            }).then(function(r) {
+            }, function(r) {
                 console.log(r);
             });
         });
