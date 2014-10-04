@@ -319,7 +319,6 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         var DROPBOX_CLIENT_ID = 'p2vlq3qzsirlzc0';
 
         var post_file = {
-            parent:"[FOLDER_ID]",
             file:"asikbous",
             name:"testskema.skema"
         };
@@ -339,14 +338,13 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
             });
 
             dropbox.api('/me/files', 'post', post_file ,function getfile(p, target) {
-              
+                console.log(p);
             });
         });
 
         hello.init({
             'dropbox': DROPBOX_CLIENT_ID,
         }, {
-            redirect_uri: '../redirect.html',
 
             // OAuth Proxy Is required to sercurely handle communications the service
             // The service https://auth-server.herokuapp.com can be used to authenticate the User+App
