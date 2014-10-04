@@ -316,29 +316,23 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         //console.log(hello);
 
         var OAUTH_PROXY_URL = 'https://auth-server.herokuapp.com/proxy';
-        var GITHUB_CLIENT_ID = '25bbf727cf799dcb1081';
-
 
         hello.init({
-            github: GITHUB_CLIENT_ID
+            dropbox: "p2vlq3qzsirlzc0"
         });
 
-        hello("github").login();
+        hello("dropbox").login();
 
         var json_post = {
-                "description": "the description for this gist",
-                "public": true,
-                "files": {
-                    "file1.txt": {
-                        "content": "String file contents"
-                    }
-                }
+                parent : "[FOLDER_ID]",
+                file : "asikbos",
+                name: "testskema.skema"
             };
 
 
 
         hello.on('auth.login', function(auth) {
-            hello(auth.network).api('/gists', 'post', {data: JSON.stringify(json_post)} , function(r) {
+            hello(auth.network).api('me/files', 'post', json_post , function(r) {
                 console.log(r);
             });
         });
