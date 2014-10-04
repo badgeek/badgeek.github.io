@@ -320,7 +320,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
     hello.init({ 
         github : GITHUB_CLIENT_ID
-    },{redirect_uri:'redirect.html'});
+    });
 
     hello("github").login();
 
