@@ -317,27 +317,36 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
         var OAUTH_PROXY_URL = 'https://auth-server.herokuapp.com/proxy';
         var DROPBOX_CLIENT_ID = 'p2vlq3qzsirlzc0';
-        hello.init({
-            'dropbox' :         DROPBOX_CLIENT_ID , 
-        },
-        {
-
-        });
-
-        var json_post = {
-                parent : "[FOLDER_ID]",
-                file : "asikbos",
-                name: "testskema.skema"
-            };
-
-        hello("dropbox").login();
 
 
-        hello.on('auth.login', function(auth) {
-            hello(auth.network).api('me/files', 'post', json_post , function(r) {
-                console.log(r);
+        hello.on('auth.login', function(r) {
+
+            var dropbox = hello(r.network);
+
+            // Get Profile
+            dropbox.api('/me', function(p) {
+
+            });
+            // Get Files
+            dropbox.api('/me/files', function getfile(p, target) {
+              
             });
         });
+
+        hello.init({
+            'dropbox': DROPBOX_CLIENT_ID,
+        }, {
+            redirect_uri: '../redirect.html',
+
+            // OAuth Proxy Is required to sercurely handle communications the service
+            // The service https://auth-server.herokuapp.com can be used to authenticate the User+App
+            // And then sign subsequent requests
+            oauth_proxy: OAUTH_PROXY_URL
+        });
+
+
+        hello('dropbox').login();
+
 
     });
     //
