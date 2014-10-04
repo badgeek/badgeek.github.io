@@ -315,20 +315,55 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
     viewNodeCanvas.on("canvas:savegist", function() {
         //console.log(hello);
 
-    var OAUTH_PROXY_URL = 'https://auth-server.herokuapp.com/proxy';
-    var GITHUB_CLIENT_ID = '25bbf727cf799dcb1081';
+        var OAUTH_PROXY_URL = 'https://auth-server.herokuapp.com/proxy';
+        var GITHUB_CLIENT_ID = '25bbf727cf799dcb1081';
 
-    hello.init({ 
-        github : GITHUB_CLIENT_ID
-    });
 
-    hello("github").login();
+        hello.init({
+            github: {
+                name: 'GitHub',
+                oauth: {
+                    version: 2,
+                    auth: 'https://github.com/login/oauth/authorize',
+                    grant: 'https://github.com/login/oauth/access_token',
+                    response_type: 'code'
+                },
 
-    hello.on('auth.login', function(auth){
-        hello( auth.network ).api( '/me' ).then( function(r){
-            console.log(r);
+                scope: {
+                    basic: '',
+                    email: 'user:email'
+                },
+                base: 'https://api.github.com/',
+                get: {
+                    'me': 'user',
+                    'me/friends': 'user/following?per_page=@{limit|100}',
+                    'me/following': 'user/following?per_page=@{limit|100}',
+                    'me/followers': 'user/followers?per_page=@{limit|100}'
+                },
+                wrap: {
+                    me: function(o, headers) {
+                        return o;
+                    },
+                    "default": function(o, headers, req) {
+                        return o;
+                    }
+                }
+            }
         });
-    });
+
+
+
+        hello.init({
+            github: GITHUB_CLIENT_ID
+        });
+
+        hello("github").login();
+
+        hello.on('auth.login', function(auth) {
+            hello(auth.network).api('/me').then(function(r) {
+                console.log(r);
+            });
+        });
 
     });
     //
