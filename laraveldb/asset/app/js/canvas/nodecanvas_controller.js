@@ -340,7 +340,9 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                     'me/following': 'user/following?per_page=@{limit|100}',
                     'me/followers': 'user/followers?per_page=@{limit|100}',
                     'me/gists': 'gists'
-
+                },
+                post: {
+                    'me/gists': 'gists'
                 },
                 wrap: {
                     me: function(o, headers) {
@@ -362,7 +364,15 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         hello("github").login();
 
         hello.on('auth.login', function(auth) {
-            hello(auth.network).api('/me/gists').then(function(r) {
+            hello(auth.network).api('/me/gists', 'post', {
+                "description": "the description for this gist",
+                "public": true,
+                "files": {
+                    "file1.txt": {
+                        "content": "String file contents"
+                    }
+                }
+            }).then(function(r) {
                 console.log(r);
             });
         });
