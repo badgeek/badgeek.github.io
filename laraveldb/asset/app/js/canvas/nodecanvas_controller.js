@@ -321,12 +321,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
             'dropbox' :         DROPBOX_CLIENT_ID , 
         },
         {
-            redirect_uri:'../redirect.html',
 
-            // OAuth Proxy Is required to sercurely handle communications the service
-            // The service https://auth-server.herokuapp.com can be used to authenticate the User+App
-            // And then sign subsequent requests
-            oauth_proxy : OAUTH_PROXY_URL
         });
 
         var json_post = {
