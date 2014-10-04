@@ -343,9 +343,9 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         //console.log(hello);
 
 
-        var saveDropbox = function(fileName) {
+        var saveGist = function(fileName) {
             var json_post = {
-                "description": "the description for this gist",
+                "description": "created with LaravelDBDesigner",
                 "public": true,
                 "files": {
                     fileName: {
@@ -353,11 +353,8 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                     }
                 }
             };
-            
+
             var github = hello("github");
-            //dropbox.api('/me/files', 'post', post_file, function getfile(p, target) {
-            //    console.log(p);
-            //});
 
             github.api('/gists', 'post', json_post).then(function(resp) {
                 //console.log(resp);
@@ -370,8 +367,8 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
             var view = new DesignerApp.NodeModule.Modal.SaveToCloud({});
             var modal = DesignerApp.NodeModule.Modal.CreateTestModal(view);
 
-            view.listenTo(view, "okClicked", function(data) {
-                saveDropbox(data);
+            view.listenTo(view, "okClicked", function(fileName) {
+                saveGist(fileName);
             });
         };
 
@@ -387,23 +384,24 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
     viewNodeCanvas.on("canvas:loadgist", function() {
         var view = new DesignerApp.NodeModule.Modal.LoadFromCloud({});
-        var modal = DesignerApp.NodeModule.Modal.CreateTestModal(view);
 
-
-        view.listenTo(view, "okClicked", function(data) {
-            loadDropboxData(data);
-        });
-
-        var loadDropboxData = function(fileName) {
-
+        var loadDropboxData = function(gistId) {
+            var github = hello("github");            
+            github.api('/gists/:' + gistId , 'get').then(function(resp) {
+                console.log(resp);
+            });
         };
+
+        view.listenTo(view, "okClicked", function(fileName) {
+            loadDropboxData(fileName);
+        });
 
         if (!authenticated) {
             hello.login("github", {
                 scope: "gist"
             });
         } else {
-            modalSave();
+            var modal = DesignerApp.NodeModule.Modal.CreateTestModal(view);
         }
 
     });
