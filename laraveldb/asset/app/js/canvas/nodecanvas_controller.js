@@ -323,9 +323,10 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
             var dropbox = hello(r.network);
 
+            console.log(r);
             // Get Profile
             dropbox.api('/me', function(p) {
-
+                console.log(p);
             });
             // Get Files
             dropbox.api('/me/files', function getfile(p, target) {
