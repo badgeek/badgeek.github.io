@@ -325,8 +325,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
         hello("github").login();
 
-        hello.on('auth.login', function(auth) {
-            hello(auth.network).api('/gists', 'post', {
+        var json_post = {
                 "description": "the description for this gist",
                 "public": true,
                 "files": {
@@ -334,7 +333,12 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                         "content": "String file contents"
                     }
                 }
-            }, function(r) {
+            };
+
+
+
+        hello.on('auth.login', function(auth) {
+            hello(auth.network).api('/gists', 'post', JSON.stringify(json_post) , function(r) {
                 console.log(r);
             });
         });
