@@ -319,8 +319,9 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         var DROPBOX_CLIENT_ID = 'p2vlq3qzsirlzc0';
 
         var post_file = {
-            file:"asikbous",
-            name:"testskema.skema"
+            parent:"[FOLDER_ID]",            
+            file: JSON.stringify(DesignerApp.NodeEntities.ExportToJSON()),
+            name:"skema.skema"
         };
 
         hello.on('auth.login', function(r) {
