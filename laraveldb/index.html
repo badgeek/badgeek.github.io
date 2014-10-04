@@ -216,8 +216,8 @@
             <button type="button" class="btn btn-default btn-xs open"><span style="margin-right: 2px" class="glyphicon glyphicon glyphicon-floppy-open "></span>open</button>
             <button type="button" class="btn btn-default btn-xs save"><span style="margin-right: 2px" class="glyphicon glyphicon-floppy-save "></span>save</button>
             <button type="button" class="btn btn-default btn-xs generate"><span style="margin-right: 2px" class="glyphicon  glyphicon-cutlery "></span>generate</button>            
-            <button type="button" class="btn btn-default btn-xs savegist"><span style="margin-right: 2px" class="glyphicon  glyphicon-cutlery "></span>save to gist</button>            
-
+            <button type="button" class="btn btn-default btn-xs savegist"><span style="margin-right: 2px" class="glyphicon  glyphicon-cutlery "></span>save to dropbox</button>            
+            <button type="button" class="btn btn-default btn-xs loadgist"><span style="margin-right: 2px" class="glyphicon  glyphicon-cutlery "></span>load from dropbox</button>  
 
         </div>
         </script>
@@ -473,6 +473,37 @@
                 </fieldset>
             </form>
             </script>            
+
+            <!-- Template
+            ================================================== -->
+            <script type="text/template" id="savetocloud-template">
+            <form class="form-horizontal">
+            <fieldset>
+
+            <!-- Form Name -->
+            <legend>Save to Dropbox</legend>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="textinput">Filename</label>  
+              <div class="col-md-4">
+              <input id="filename" name="filename" type="text" placeholder="filename.skema" class="form-control input-md">
+                
+              </div>
+            </div>
+
+            <!-- Button (Double) -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="button1id"></label>
+              <div class="col-md-8">
+                <button id="button1id" name="button1id" class="btn ok btn-success">Save</button>
+                <button id="button2id" name="button2id" class="btn cancel btn-danger">Cancel</button>
+              </div>
+            </div>
+
+            </fieldset>
+            </form>
+            </script>
             <!-- Bootstrap core JavaScript
             ================================================== -->
             <!-- Placed at the end of the document so the pages load faster -->

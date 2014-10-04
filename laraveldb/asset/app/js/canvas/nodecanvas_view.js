@@ -9,8 +9,8 @@ DesignerApp.module("NodeCanvas.Views", function(Views, DesignerApp, Backbone, Ma
             "click .open": "canvas:open",
             "click .save": "canvas:save",
             "click .generate": "canvas:generate",
-            "click .savegist": "canvas:savegist"
-
+            "click .savegist": "canvas:savegist",
+            "click .loadgist": "canvas:loadgist"
         },
     });
 

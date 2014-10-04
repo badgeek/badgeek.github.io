@@ -470,6 +470,50 @@ DesignerApp.module("NodeModule.Modal", function(Modal, DesignerApp, Backbone, Ma
         }
     });
 
+    Modal.SaveToCloud = Modal.BaseModal.extend({
+        template: _.template($("#savetocloud-template").html()),
+        initialize: function(param)
+        {
+            this.content = param.content;
+        }, events: {
+            "click .ok": "okClicked"
+        },
+        okClicked: function()
+        {
+            var file = this.$("#filename").val();
+            this.trigger("okClicked", file);
+        },
+        render: function() {
+            //console.log(view.render().el);
+            this.$el.html(this.template({
+                content: this.content
+            }));
+            return this.el;
+        }
+    });
+
+
+    Modal.LoadFromCloud = Modal.BaseModal.extend({
+        template: _.template($("#savetocloud-template").html()),
+        initialize: function(param)
+        {
+            this.content = param.content;
+        }, events: {
+            "click .ok": "okClicked"
+        },
+        okClicked: function()
+        {
+            var file = this.$("#filename").val();
+            this.trigger("okClicked", file);
+        },
+        render: function() {
+            //console.log(view.render().el);
+            this.$el.html(this.template({
+                content: this.content
+            }));
+            return this.el;
+        }
+    });
 
     // Public
     // -------------------------
