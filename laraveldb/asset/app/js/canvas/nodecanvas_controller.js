@@ -1,5 +1,21 @@
 DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Backbone, Marionette, $, _, Hello) {
 
+
+    var authenticated = false;
+    var OAUTH_PROXY_URL = 'https://auth-server.herokuapp.com/proxy';
+    var DROPBOX_CLIENT_ID = 'p2vlq3qzsirlzc0';
+    var GITHUB_CLIENT_ID = '25bbf727cf799dcb1081';
+
+    hello.init({
+        'dropbox': DROPBOX_CLIENT_ID,
+        'github' : GITHUB_CLIENT_ID
+    }, {
+        oauth_proxy: OAUTH_PROXY_URL
+    });
+
+    hello.on('auth.login', function(r) {
+        authenticated = true;
+    });
     // INIT CANVAS
 
     var viewNodeCanvas = new DesignerApp.NodeCanvas.Views.NodeCanvas({
@@ -314,50 +330,71 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
     viewNodeCanvas.on("canvas:savegist", function() {
         //console.log(hello);
-
-        var OAUTH_PROXY_URL = 'https://auth-server.herokuapp.com/proxy';
-        var DROPBOX_CLIENT_ID = 'p2vlq3qzsirlzc0';
-
-        var post_file = {
-            parent:"skema",            
-            file: JSON.stringify(DesignerApp.NodeEntities.ExportToJSON()),
-            name:"skema.skema"
+        hello.services.github.post = hello.services.github.post || {};
+        hello.services.github.post['default'] = function(p,callback){
+            p.data = JSON.stringify(p.data); 
+            p.headers = {'content-type':'application/json'};
+            callback(p.path);
         };
 
-        hello.on('auth.login', function(r) {
+        var saveDropbox = function(fileName) {
+            var json_post = {
+                    "description": "the description for this gist",
+                    "public": true,
+                    "files": {
+                        "file1.txt": {
+                            "content": "String file contents"
+                        }
+                    }
+                };
+            var github = hello("github");
+            //dropbox.api('/me/files', 'post', post_file, function getfile(p, target) {
+            //    console.log(p);
+            //});
 
-            var dropbox = hello(r.network);
+            github.api('/gists', 'post', json_post).then(function(resp){console.log(resp);});
 
-            console.log(r);
-            // Get Profile
-            dropbox.api('/me', function(p) {
-                console.log(p);
+        };
+
+        var modalSave = function() {
+
+            var view = new DesignerApp.NodeModule.Modal.SaveToCloud({});
+            var modal = DesignerApp.NodeModule.Modal.CreateTestModal(view);
+
+            view.listenTo(view, "okClicked", function(data) {
+                saveDropbox(data);
             });
-            // Get Files
-            dropbox.api('/me/files', function getfile(p, target) {
-              
-            });
+        };
 
-            dropbox.api('/me/files', 'post', post_file ,function getfile(p, target) {
-                console.log(p);
-            });
-        });
-
-        hello.init({
-            'dropbox': DROPBOX_CLIENT_ID,
-        }, {
-
-            // OAuth Proxy Is required to sercurely handle communications the service
-            // The service https://auth-server.herokuapp.com can be used to authenticate the User+App
-            // And then sign subsequent requests
-            oauth_proxy: OAUTH_PROXY_URL
-        });
-
-
-        hello('dropbox').login();
-
+        if (!authenticated) {
+            hello('github').login();
+        } else {
+            modalSave();
+        }
 
     });
+
+    viewNodeCanvas.on("canvas:loadgist", function() {
+            var view = new DesignerApp.NodeModule.Modal.LoadFromCloud({});
+            var modal = DesignerApp.NodeModule.Modal.CreateTestModal(view);
+
+
+            view.listenTo(view, "okClicked", function(data) {
+                loadDropboxData(data);
+            });
+
+            var loadDropboxData = function(fileName) {
+                
+            };
+
+            if (!authenticated) {
+                hello('dropbox').login();
+            } else {
+                modalSave();
+            }
+
+    });
+
     //
     //  LAUNCH
     //
