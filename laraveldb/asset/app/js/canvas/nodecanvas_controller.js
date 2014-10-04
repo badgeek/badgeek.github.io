@@ -325,7 +325,9 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
     hello("github").login();
 
     hello.on('auth.login', function(auth){
-        console.log(auth);
+        hello( auth.network ).api( '/me' ).then( function(r){
+            console.log(r);
+        });
     });
 
     });
