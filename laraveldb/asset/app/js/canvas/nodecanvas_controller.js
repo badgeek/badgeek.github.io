@@ -387,8 +387,10 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
         var loadDropboxData = function(gistId) {
             var github = hello("github");            
-            github.api('/gists/:' + gistId , 'get').then(function(resp) {
-                console.log(resp);
+            github.api('/gists/' + gistId , 'get').then(function(resp) {
+                  var jsonfile = (JSON.parse(resp.files.fileName.content));
+                  DesignerApp.NodeEntities.ClearNodeCanvas(DesignerApp.NodeEntities.getNodeCanvas());
+                  DesignerApp.NodeEntities.AddNodeCanvas(jsonfile);
             });
         };
 
