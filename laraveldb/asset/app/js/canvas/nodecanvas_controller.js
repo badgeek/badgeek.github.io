@@ -335,6 +335,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                 name: "testskema.skema"
             };
 
+        hello("dropbox").login();
 
 
         hello.on('auth.login', function(auth) {
