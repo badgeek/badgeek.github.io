@@ -339,7 +339,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                     'me/friends': 'user/following?per_page=@{limit|100}',
                     'me/following': 'user/following?per_page=@{limit|100}',
                     'me/followers': 'user/followers?per_page=@{limit|100}',
-                    'me/gists': 'users/:badgeek/gist'
+                    'me/gists': 'gists'
 
                 },
                 wrap: {
